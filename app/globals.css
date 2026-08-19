@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sand-50: #faf8f4;
+  --color-sand-100: #f3ece1;
+  --color-sand-200: #e8dccb;
+  --color-sand-300: #d6c4a8;
+  --color-sand-400: #c0a47e;
+  --color-sand-500: #a8834f;
+  --color-sand-600: #8a6740;
+  --color-sand-700: #6b4f32;
+  --color-sand-800: #3d2d1e;
+  --color-sand-900: #1c1714;
+  --font-sans: var(--font-heebo), 'Arial', system-ui, sans-serif;
+}
+
+html {
+  direction: rtl;
+}
+
+* {
+  box-sizing: border-box;
+}

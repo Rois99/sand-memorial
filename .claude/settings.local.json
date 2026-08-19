@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(ls /c/sand-memorial/*.js)",
+      "Bash(ls /c/sand-memorial/middleware*)",
+      "Bash(ls /c/sand-memorial/proxy*)",
+      "Bash(taskkill:*)",
+      "Bash(cmd /c \"taskkill /PID 16832 /F\" 2>&1)",
+      "Bash(cmd /c \"netstat -ano | findstr :3000\" 2>&1)",
+      "Bash(cmd /c \"netstat -ano | findstr LISTEN\")",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\" 2>&1)",
+      "Bash(cat /c/sand-memorial/.next/dev/lock/*)"
+    ]
+  }
+}
