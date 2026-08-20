@@ -11,6 +11,10 @@ const heebo = Heebo({
 export const metadata = {
   title: "זיכרון בחול",
   description: "פרויקט הנצחה לזכר חללים ונופלים בפסלי חול",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
