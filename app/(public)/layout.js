@@ -10,7 +10,10 @@ export default function PublicLayout({ children }) {
           <p className="text-sand-300 font-medium mb-1">זיכרון בחול</p>
           <p>פרויקט הנצחה לחללי ישראל — פסלים עשויים חול, לב ואהבה</p>
           <p className="mt-4 text-sand-600 text-xs">
-            © {new Date().getFullYear()} כל הזכויות שמורות
+             © {new Date().getFullYear()} זיכרון בחול - כל הזכויות שמורות לאלמוג שריקי
+          </p>
+          <p className="mt-1 text-sand-600/40 text-[10px]">
+            .
           </p>
         </div>
       </footer>
