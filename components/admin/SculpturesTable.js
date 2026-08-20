@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Images } from "lucide-react";
+import { Trash2, Images, Pencil } from "lucide-react";
 import MediaModal from "./MediaModal";
+import EditModal from "./EditModal";
 
-export default function SculpturesTable({ sculptures, onDelete, onMediaUpdated }) {
+export default function SculpturesTable({ sculptures, onDelete, onUpdate, onMediaUpdated }) {
   const [editingMedia, setEditingMedia] = useState(null);
+  const [editingSculpture, setEditingSculpture] = useState(null);
 
   function handleMediaUpdated(sculptureId, media) {
     onMediaUpdated(sculptureId, media);
@@ -46,6 +48,13 @@ export default function SculpturesTable({ sculptures, onDelete, onMediaUpdated }
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-2">
                       <button
+                        onClick={() => setEditingSculpture(s)}
+                        title="עריכת פרטים"
+                        className="text-sand-500 hover:text-sand-800 hover:bg-sand-100 p-1.5 rounded-lg transition-colors"
+                      >
+                        <Pencil size={15} />
+                      </button>
+                      <button
                         onClick={() => setEditingMedia(s)}
                         title="עריכת מדיה"
                         className="text-sand-500 hover:text-sand-800 hover:bg-sand-100 p-1.5 rounded-lg transition-colors"
@@ -80,6 +89,14 @@ export default function SculpturesTable({ sculptures, onDelete, onMediaUpdated }
           sculpture={editingMedia}
           onClose={() => setEditingMedia(null)}
           onMediaUpdated={handleMediaUpdated}
+        />
+      )}
+
+      {editingSculpture && (
+        <EditModal
+          sculpture={editingSculpture}
+          onClose={() => setEditingSculpture(null)}
+          onUpdate={onUpdate}
         />
       )}
     </section>

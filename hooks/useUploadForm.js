@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const INITIAL_FORM = { name: "", unit: "", age: "", story: "", files: [] };
+const INITIAL_FORM = { name: "", unit: "", age: "", story: "", instagram_url: "", files: [] };
 
 /**
  * Manages the "upload new sculpture" form state and submission.
@@ -32,6 +32,7 @@ export function useUploadForm(onSuccess) {
       unit: form.unit,
       age: Number(form.age),
       story: form.story,
+      instagram_url: form.instagram_url.trim() || null,
       date: new Date().toLocaleDateString("he-IL", {
         month: "long",
         year: "numeric",

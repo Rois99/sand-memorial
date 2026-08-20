@@ -12,6 +12,7 @@ import StatsBar from "@/components/admin/StatsBar";
 import SculpturesTable from "@/components/admin/SculpturesTable";
 import RequestsTable from "@/components/admin/RequestsTable";
 import UploadForm from "@/components/admin/UploadForm";
+import ArtistProfileForm from "@/components/admin/ArtistProfileForm";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function AdminDashboard() {
     error: sculpturesError,
     deleteSculpture,
     addSculpture,
+    updateSculpture,
     updateSculptureMedia,
   } = useSculptures();
 
@@ -86,7 +88,7 @@ export default function AdminDashboard() {
       ) : (
         <div className="max-w-6xl mx-auto px-6 py-10 space-y-12">
           <StatsBar stats={stats} />
-          <SculpturesTable sculptures={sculptures} onDelete={deleteSculpture} onMediaUpdated={updateSculptureMedia} />
+          <SculpturesTable sculptures={sculptures} onDelete={deleteSculpture} onUpdate={updateSculpture} onMediaUpdated={updateSculptureMedia} />
           <RequestsTable
             requests={requests}
             sortByDuplicates={sortByDuplicates}
@@ -94,6 +96,7 @@ export default function AdminDashboard() {
             onMarkAsHandled={markAsHandled}
           />
           <UploadForm {...uploadForm} />
+          <ArtistProfileForm />
         </div>
       )}
     </div>

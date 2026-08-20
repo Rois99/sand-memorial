@@ -3,6 +3,16 @@
 import { use, useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Mountain, ArrowRight, X } from "lucide-react";
+
+function InstagramIcon({ size = 16, className }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
 import { supabase } from "@/lib/supabase";
 
 /* ── Candle icon ─────────────────────────────────────────── */
@@ -258,6 +268,21 @@ export default function SculpturePage({ params }) {
           {story}
         </p>
       </section>
+
+      {/* Instagram link */}
+      {sculpture.instagram_url && (
+        <div className="max-w-3xl mx-auto px-6 pb-2">
+          <a
+            href={sculpture.instagram_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm hover:opacity-90 transition-opacity"
+          >
+            <InstagramIcon size={17} />
+            לפוסט באינסטגרם
+          </a>
+        </div>
+      )}
 
       {/* Photo grid */}
       <PhotoGrid media={sculpture_media} />

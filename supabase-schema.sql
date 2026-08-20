@@ -14,8 +14,9 @@ CREATE TABLE sculptures (
   unit        TEXT         NOT NULL,
   date        TEXT         NOT NULL,        -- Display date, e.g. "אוקטובר 2023"
   story       TEXT         NOT NULL,
-  image_url   TEXT,                         -- Supabase Storage public URL
-  created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+  image_url      TEXT,                      -- Supabase Storage public URL (legacy)
+  instagram_url  TEXT,                      -- Optional link to original Instagram post
+  created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
 -- ────────────────────────────────────────────────────────────

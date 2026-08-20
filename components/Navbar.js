@@ -18,6 +18,12 @@ export default function Navbar() {
             בית
           </Link>
           <Link
+            href="/artist"
+            className="hover:text-sand-300 transition-colors duration-200"
+          >
+            על האמן
+          </Link>
+          <Link
             href="/request"
             className="bg-sand-600 hover:bg-sand-500 text-sand-50 px-4 py-2 rounded-lg transition-colors duration-200"
           >

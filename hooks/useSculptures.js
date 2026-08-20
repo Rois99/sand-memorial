@@ -73,6 +73,20 @@ export function useSculptures() {
     return { success: true };
   }
 
+  async function updateSculpture(id, fields) {
+    const { error } = await supabase
+      .from("sculptures")
+      .update(fields)
+      .eq("id", id);
+    if (error) {
+      alert("שגיאה בעדכון: " + error.message);
+      return;
+    }
+    setSculptures((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, ...fields } : s))
+    );
+  }
+
   /** Called by MediaModal after upload or delete to sync state. */
   function updateSculptureMedia(sculptureId, media) {
     setSculptures((prev) =>
@@ -88,6 +102,7 @@ export function useSculptures() {
     error,
     deleteSculpture,
     addSculpture,
+    updateSculpture,
     updateSculptureMedia,
   };
 }
