@@ -84,7 +84,7 @@ export default function ArtistPage() {
               האמן מאחורי הפרויקט
             </p>
             <h1 className="text-4xl font-bold text-sand-50 leading-tight">
-              על האמן
+              על האמן - אלמוג שריקי
             </h1>
             {instagram_url && (
               <a
