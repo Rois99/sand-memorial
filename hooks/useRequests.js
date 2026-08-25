@@ -11,6 +11,8 @@ function mapRequest(row) {
     requesterName: row.requester_name,
     contactInfo: row.contact_info,
     fallenName: row.fallen_name,
+    rank: row.rank ?? "",
+    unit: row.unit ?? "",
     story: row.story,
     status: row.status,
     submittedAt: row.submitted_at?.slice(0, 10) ?? "",
@@ -21,7 +23,8 @@ export function useRequests() {
   const [allRequests, setAllRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortByDuplicates, setSortByDuplicates] = useState(false);
+  // "default" | "name" | "unit" | "duplicates"
+  const [requestSort, setRequestSort] = useState("default");
 
   useEffect(() => {
     supabase
@@ -41,19 +44,32 @@ export function useRequests() {
     [allRequests]
   );
 
-  /** Active requests, optionally sorted by duplicate fallen-name count descending. */
+  /** Active requests sorted according to the current requestSort value. */
   const displayedRequests = useMemo(() => {
-    if (!sortByDuplicates) return activeRequests;
+    if (requestSort === "name") {
+      return [...activeRequests].sort((a, b) =>
+        a.fallenName.localeCompare(b.fallenName, "he")
+      );
+    }
 
-    const countByName = activeRequests.reduce((acc, r) => {
-      acc[r.fallenName] = (acc[r.fallenName] ?? 0) + 1;
-      return acc;
-    }, {});
+    if (requestSort === "unit") {
+      return [...activeRequests].sort((a, b) =>
+        (a.unit ?? "").localeCompare(b.unit ?? "", "he")
+      );
+    }
 
-    return [...activeRequests].sort(
-      (a, b) => countByName[b.fallenName] - countByName[a.fallenName]
-    );
-  }, [activeRequests, sortByDuplicates]);
+    if (requestSort === "duplicates") {
+      const countByName = activeRequests.reduce((acc, r) => {
+        acc[r.fallenName] = (acc[r.fallenName] ?? 0) + 1;
+        return acc;
+      }, {});
+      return [...activeRequests].sort(
+        (a, b) => countByName[b.fallenName] - countByName[a.fallenName]
+      );
+    }
+
+    return activeRequests; // "default" — date desc from DB
+  }, [activeRequests, requestSort]);
 
   /**
    * Marks a request as handled.
@@ -97,17 +113,13 @@ export function useRequests() {
     );
   }
 
-  function toggleSort() {
-    setSortByDuplicates((v) => !v);
-  }
-
   return {
     requests: displayedRequests,
     allRequests,
     loading,
     error,
-    sortByDuplicates,
-    toggleSort,
+    requestSort,
+    setRequestSort,
     markAsHandled,
   };
 }

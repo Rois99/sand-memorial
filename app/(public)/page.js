@@ -5,17 +5,10 @@ import { Search } from "lucide-react";
 import SculptureCard from "@/components/SculptureCard";
 import { supabase } from "@/lib/supabase";
 
-const SORT_OPTIONS = [
-  { value: "default", label: "ברירת מחדל" },
-  { value: "name",    label: "שם א–ת" },
-  { value: "unit",    label: "יחידה" },
-];
-
 export default function HomePage() {
   const [sculptures, setSculptures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [sortBy, setSortBy] = useState("default");
 
   useEffect(() => {
     supabase
@@ -30,20 +23,15 @@ export default function HomePage() {
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const base = q
-      ? sculptures.filter(
-          (s) =>
-            s.name.toLowerCase().includes(q) ||
-            s.unit?.toLowerCase().includes(q) ||
-            s.story?.toLowerCase().includes(q) ||
-            s.rank?.toLowerCase().includes(q)
-        )
-      : sculptures;
-
-    if (sortBy === "name") return [...base].sort((a, b) => a.name.localeCompare(b.name, "he"));
-    if (sortBy === "unit") return [...base].sort((a, b) => (a.unit ?? "").localeCompare(b.unit ?? "", "he"));
-    return base;
-  }, [query, sortBy, sculptures]);
+    if (!q) return sculptures;
+    return sculptures.filter(
+      (s) =>
+        s.name.toLowerCase().includes(q) ||
+        s.unit?.toLowerCase().includes(q) ||
+        s.story?.toLowerCase().includes(q) ||
+        s.rank?.toLowerCase().includes(q)
+    );
+  }, [query, sculptures]);
 
   return (
     <>
@@ -90,24 +78,6 @@ export default function HomePage() {
             placeholder="חיפוש לפי שם, יחידה, דרגה או סיפור..."
             className="w-full bg-white border border-sand-200 rounded-xl py-3 px-4 pe-11 text-sand-900 placeholder:text-sand-400 focus:outline-none focus:ring-2 focus:ring-sand-400 focus:border-transparent transition-shadow shadow-sm text-sm"
           />
-        </div>
-
-        {/* Sort controls */}
-        <div className="flex items-center justify-center gap-2 mb-10">
-          <span className="text-xs text-sand-400 font-medium me-1">מיון:</span>
-          {SORT_OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => setSortBy(opt.value)}
-              className={`text-xs px-3.5 py-1.5 rounded-lg font-medium transition-colors ${
-                sortBy === opt.value
-                  ? "bg-sand-900 text-sand-50"
-                  : "bg-sand-100 text-sand-600 hover:bg-sand-200"
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
         </div>
 
         {loading ? (

@@ -1,27 +1,39 @@
-import { Check, ArrowUpDown } from "lucide-react";
+import { Check } from "lucide-react";
 import { STATUS_CONFIG, REQUEST_STATUS } from "@/lib/constants";
+
+const SORT_OPTIONS = [
+  { value: "default",    label: "ברירת מחדל" },
+  { value: "name",       label: "שם א–ת" },
+  { value: "unit",       label: "יחידה" },
+  { value: "duplicates", label: "כפילויות" },
+];
 
 export default function RequestsTable({
   requests,
-  sortByDuplicates,
-  onToggleSort,
+  requestSort,
+  onSortChange,
   onMarkAsHandled,
 }) {
   return (
     <section>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <h2 className="text-xl font-semibold text-sand-900">בקשות שהתקבלו</h2>
-        <button
-          onClick={onToggleSort}
-          className={`flex items-center gap-2 text-sm px-4 py-2 rounded-lg border transition-colors ${
-            sortByDuplicates
-              ? "bg-sand-900 text-sand-100 border-sand-900"
-              : "bg-white text-sand-600 border-sand-200 hover:border-sand-400"
-          }`}
-        >
-          <ArrowUpDown size={14} />
-          {sortByDuplicates ? "מיון לפי כפילויות (פעיל)" : "מיין לפי כפילויות"}
-        </button>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-sand-400 font-medium me-1">מיון:</span>
+          {SORT_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => onSortChange(opt.value)}
+              className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                requestSort === opt.value
+                  ? "bg-sand-900 text-sand-50"
+                  : "bg-white text-sand-600 border border-sand-200 hover:border-sand-400"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="bg-white rounded-2xl border border-sand-200 overflow-hidden shadow-sm">
@@ -32,6 +44,7 @@ export default function RequestsTable({
                 <th className="px-5 py-3 font-semibold">#</th>
                 <th className="px-5 py-3 font-semibold">שם הפונה</th>
                 <th className="px-5 py-3 font-semibold">שם הנופל</th>
+                <th className="px-5 py-3 font-semibold">יחידה</th>
                 <th className="px-5 py-3 font-semibold">פרטי קשר</th>
                 <th className="px-5 py-3 font-semibold">סיפור</th>
                 <th className="px-5 py-3 font-semibold">תאריך</th>
@@ -41,35 +54,22 @@ export default function RequestsTable({
             </thead>
             <tbody className="divide-y divide-sand-100">
               {requests.map((req) => {
-                const statusCfg =
-                  STATUS_CONFIG[req.status] ?? STATUS_CONFIG.pending;
+                const statusCfg = STATUS_CONFIG[req.status] ?? STATUS_CONFIG.pending;
                 return (
-                  <tr
-                    key={req.id}
-                    className="hover:bg-sand-50 transition-colors"
-                  >
-                    <td className="px-5 py-4 text-sand-400 font-mono text-xs">
-                      {req.id}
+                  <tr key={req.id} className="hover:bg-sand-50 transition-colors">
+                    <td className="px-5 py-4 text-sand-400 font-mono text-xs">{req.id}</td>
+                    <td className="px-5 py-4 font-medium text-sand-900">{req.requesterName}</td>
+                    <td className="px-5 py-4 text-sand-800 whitespace-nowrap">{req.fallenName}</td>
+                    <td className="px-5 py-4 text-sand-600 text-xs whitespace-nowrap">
+                      {req.unit || <span className="text-sand-300">—</span>}
                     </td>
-                    <td className="px-5 py-4 font-medium text-sand-900">
-                      {req.requesterName}
-                    </td>
-                    <td className="px-5 py-4 text-sand-800 whitespace-nowrap">
-                      {req.fallenName}
-                    </td>
-                    <td className="px-5 py-4 text-sand-600 text-xs">
-                      {req.contactInfo}
-                    </td>
+                    <td className="px-5 py-4 text-sand-600 text-xs">{req.contactInfo}</td>
                     <td className="px-5 py-4 text-sand-600 max-w-xs">
                       <p className="truncate">{req.story}</p>
                     </td>
-                    <td className="px-5 py-4 text-sand-500 text-xs whitespace-nowrap">
-                      {req.submittedAt}
-                    </td>
+                    <td className="px-5 py-4 text-sand-500 text-xs whitespace-nowrap">{req.submittedAt}</td>
                     <td className="px-5 py-4">
-                      <span
-                        className={`inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full ${statusCfg.className}`}
-                      >
+                      <span className={`inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full ${statusCfg.className}`}>
                         {statusCfg.label}
                       </span>
                     </td>
@@ -89,10 +89,7 @@ export default function RequestsTable({
               })}
               {requests.length === 0 && (
                 <tr>
-                  <td
-                    colSpan={8}
-                    className="px-5 py-10 text-center text-sand-400"
-                  >
+                  <td colSpan={9} className="px-5 py-10 text-center text-sand-400">
                     אין בקשות פעילות
                   </td>
                 </tr>

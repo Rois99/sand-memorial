@@ -31,8 +31,8 @@ export default function AdminDashboard() {
     allRequests,
     loading: requestsLoading,
     error: requestsError,
-    sortByDuplicates,
-    toggleSort,
+    requestSort,
+    setRequestSort,
     markAsHandled,
   } = useRequests();
 
@@ -91,8 +91,8 @@ export default function AdminDashboard() {
           <SculpturesTable sculptures={sculptures} onDelete={deleteSculpture} onUpdate={updateSculpture} onMediaUpdated={updateSculptureMedia} />
           <RequestsTable
             requests={requests}
-            sortByDuplicates={sortByDuplicates}
-            onToggleSort={toggleSort}
+            requestSort={requestSort}
+            onSortChange={setRequestSort}
             onMarkAsHandled={markAsHandled}
           />
           <UploadForm {...uploadForm} />
