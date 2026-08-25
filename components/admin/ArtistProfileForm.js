@@ -22,7 +22,7 @@ function InstagramIcon({ className }) {
 
 export default function ArtistProfileForm() {
   const [profile, setProfile] = useState(null);
-  const [form, setForm] = useState({ bio_text: "", instagram_url: "" });
+  const [form, setForm] = useState({ bio_text: "", instagram_url: "", tiktok_url: "" });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -41,6 +41,7 @@ export default function ArtistProfileForm() {
           setForm({
             bio_text: data.bio_text ?? "",
             instagram_url: data.instagram_url ?? "",
+            tiktok_url: data.tiktok_url ?? "",
           });
         }
         setLoading(false);
@@ -88,6 +89,7 @@ export default function ArtistProfileForm() {
       .update({
         bio_text: form.bio_text,
         instagram_url: form.instagram_url.trim() || null,
+        tiktok_url: form.tiktok_url.trim() || null,
         image_url,
         updated_at: new Date().toISOString(),
       })
@@ -96,7 +98,7 @@ export default function ArtistProfileForm() {
     if (error) {
       alert("שגיאה בשמירה: " + error.message);
     } else {
-      setProfile((prev) => ({ ...prev, bio_text: form.bio_text, instagram_url: form.instagram_url.trim() || null, image_url }));
+      setProfile((prev) => ({ ...prev, bio_text: form.bio_text, instagram_url: form.instagram_url.trim() || null, tiktok_url: form.tiktok_url.trim() || null, image_url }));
       setImageFile(null);
       setSaved(true);
       setTimeout(() => setSaved(false), 3500);
@@ -173,6 +175,27 @@ export default function ArtistProfileForm() {
                   value={form.instagram_url}
                   onChange={handleChange}
                   placeholder="https://www.instagram.com/..."
+                  className={`${inputClass} ps-9`}
+                  dir="ltr"
+                />
+              </div>
+            </div>
+
+            {/* TikTok URL */}
+            <div>
+              <label className="block text-xs font-semibold text-sand-700 mb-1.5">
+                קישור טיקטוק
+              </label>
+              <div className="relative">
+                <svg width={14} height={14} viewBox="0 0 24 24" fill="currentColor" className="absolute top-1/2 -translate-y-1/2 start-3 text-sand-400 pointer-events-none">
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.3 6.3 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z" />
+                </svg>
+                <input
+                  type="url"
+                  name="tiktok_url"
+                  value={form.tiktok_url}
+                  onChange={handleChange}
+                  placeholder="https://www.tiktok.com/@..."
                   className={`${inputClass} ps-9`}
                   dir="ltr"
                 />

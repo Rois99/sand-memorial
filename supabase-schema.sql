@@ -144,3 +144,15 @@ CREATE POLICY "DEV_storage_sculpture_media_anon_insert"
 CREATE POLICY "DEV_storage_sculpture_media_anon_delete"
   ON storage.objects FOR DELETE TO anon
   USING (bucket_id = 'sculpture-media');
+
+
+-- ============================================================
+-- MIGRATIONS — run these ALTER TABLE statements if the tables
+-- already exist (skip if running the schema fresh).
+-- ============================================================
+-- ALTER TABLE sculptures    ADD COLUMN rank             TEXT;
+-- ALTER TABLE sculptures    ADD COLUMN tiktok_url       TEXT;
+-- ALTER TABLE sculptures    ADD COLUMN has_fallen_photo BOOLEAN NOT NULL DEFAULT FALSE;
+-- ALTER TABLE requests      ADD COLUMN rank             TEXT;
+-- ALTER TABLE requests      ADD COLUMN unit             TEXT;
+-- ALTER TABLE artist_profile ADD COLUMN tiktok_url      TEXT;
