@@ -153,6 +153,8 @@ CREATE POLICY "DEV_storage_sculpture_media_anon_delete"
 -- ALTER TABLE sculptures    ADD COLUMN rank             TEXT;
 -- ALTER TABLE sculptures    ADD COLUMN tiktok_url       TEXT;
 -- ALTER TABLE sculptures    ADD COLUMN has_fallen_photo BOOLEAN NOT NULL DEFAULT FALSE;
+-- ALTER TABLE sculptures    ADD COLUMN yizkor_url       TEXT;
 -- ALTER TABLE requests      ADD COLUMN rank             TEXT;
 -- ALTER TABLE requests      ADD COLUMN unit             TEXT;
+-- ALTER TABLE requests      ADD COLUMN yizkor_url       TEXT;
 -- ALTER TABLE artist_profile ADD COLUMN tiktok_url      TEXT;

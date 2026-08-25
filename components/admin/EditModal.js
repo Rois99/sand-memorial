@@ -33,6 +33,7 @@ export default function EditModal({ sculpture, onClose, onUpdate }) {
     story: sculpture.story ?? "",
     instagram_url: sculpture.instagram_url ?? "",
     tiktok_url: sculpture.tiktok_url ?? "",
+    yizkor_url: sculpture.yizkor_url ?? "",
     has_fallen_photo: sculpture.has_fallen_photo ?? false,
   });
   const [saving, setSaving] = useState(false);
@@ -53,6 +54,7 @@ export default function EditModal({ sculpture, onClose, onUpdate }) {
       story: form.story,
       instagram_url: form.instagram_url.trim() || null,
       tiktok_url: form.tiktok_url.trim() || null,
+      yizkor_url: form.yizkor_url.trim() || null,
       has_fallen_photo: form.has_fallen_photo,
     });
     setSaving(false);
@@ -113,6 +115,19 @@ export default function EditModal({ sculpture, onClose, onUpdate }) {
                 <TikTokIcon className="absolute top-1/2 -translate-y-1/2 start-3 text-sand-400 pointer-events-none" />
                 <input type="url" name="tiktok_url" value={form.tiktok_url} onChange={handleChange}
                   placeholder="https://www.tiktok.com/..." className={`${inputClass} ps-9`} dir="ltr" />
+              </div>
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-xs font-semibold text-sand-700 mb-1.5">קישור יזכור</label>
+              <div className="relative">
+                <svg viewBox="0 0 24 24" fill="currentColor" width={14} height={14} className="absolute top-1/2 -translate-y-1/2 start-3 text-amber-400 pointer-events-none">
+                  <path d="M12 2C11.5 4 9.5 5.5 9.5 8C9.5 9.9 10.7 11.3 12 12C13.3 11.3 14.5 9.9 14.5 8C14.5 5.5 12.5 4 12 2Z" />
+                  <rect x="9.5" y="13.5" width="5" height="7.5" rx="0.75" fillOpacity="0.85" />
+                  <rect x="8" y="21" width="8" height="1.5" rx="0.75" fillOpacity="0.65" />
+                </svg>
+                <input type="url" name="yizkor_url" value={form.yizkor_url} onChange={handleChange}
+                  placeholder="https://izkor.gov.il/..." className={`${inputClass} ps-9`} dir="ltr" />
               </div>
             </div>
           </div>

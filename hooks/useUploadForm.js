@@ -10,6 +10,7 @@ const INITIAL_FORM = {
   story: "",
   instagram_url: "",
   tiktok_url: "",
+  yizkor_url: "",
   has_fallen_photo: false,
   files: [],
 };
@@ -42,6 +43,7 @@ export function useUploadForm(onSuccess) {
       story: form.story,
       instagram_url: form.instagram_url.trim() || null,
       tiktok_url: form.tiktok_url.trim() || null,
+      yizkor_url: form.yizkor_url.trim() || null,
       has_fallen_photo: form.has_fallen_photo,
       date: new Date().toLocaleDateString("he-IL", {
         month: "long",

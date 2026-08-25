@@ -19,6 +19,18 @@ function mapRequest(row) {
   };
 }
 
+// ── Unit tier system ──────────────────────────────────────────
+// Normalize Hebrew gershayim (״) to ASCII " so both input styles match.
+const TIER1 = ["סיירת", "שייטת", 'מטכ"ל', "שלדג", "קומנדו", "מגלן", "אגוז", "דובדבן", 'ימ"מ', 'לוט"ר'];
+const TIER2 = ["גולני", "צנחנים", "גבעתי", 'נח"ל', "כפיר", "שריון", "תותחנים", "הנדסה", "איסוף", 'מג"ב', "חילוץ", 'חי"ר'];
+
+function getUnitTier(unit) {
+  const u = (unit ?? "").replace(/״/g, '"');
+  if (TIER1.some((kw) => u.includes(kw))) return 1;
+  if (TIER2.some((kw) => u.includes(kw))) return 2;
+  return 3;
+}
+
 export function useRequests() {
   const [allRequests, setAllRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,13 +50,11 @@ export function useRequests() {
       });
   }, []);
 
-  /** All requests that have not been marked as handled. */
   const activeRequests = useMemo(
     () => allRequests.filter((r) => r.status !== REQUEST_STATUS.HANDLED),
     [allRequests]
   );
 
-  /** Active requests sorted according to the current requestSort value. */
   const displayedRequests = useMemo(() => {
     if (requestSort === "name") {
       return [...activeRequests].sort((a, b) =>
@@ -53,9 +63,12 @@ export function useRequests() {
     }
 
     if (requestSort === "unit") {
-      return [...activeRequests].sort((a, b) =>
-        (a.unit ?? "").localeCompare(b.unit ?? "", "he")
-      );
+      return [...activeRequests].sort((a, b) => {
+        const tierDiff = getUnitTier(a.unit) - getUnitTier(b.unit);
+        // Within the same tier, sort alphabetically by unit name
+        if (tierDiff !== 0) return tierDiff;
+        return (a.unit ?? "").localeCompare(b.unit ?? "", "he");
+      });
     }
 
     if (requestSort === "duplicates") {
@@ -71,11 +84,6 @@ export function useRequests() {
     return activeRequests; // "default" — date desc from DB
   }, [activeRequests, requestSort]);
 
-  /**
-   * Marks a request as handled.
-   * If other *pending* requests share the same fallen name, prompts the admin
-   * to batch-handle them as well before committing the write.
-   */
   async function markAsHandled(id) {
     const target = allRequests.find((r) => r.id === id);
     if (!target) return;

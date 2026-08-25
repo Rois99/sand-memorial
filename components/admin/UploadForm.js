@@ -80,6 +80,20 @@ export default function UploadForm({ form, handleChange, handleSubmit, uploading
               </div>
             </div>
 
+            {/* Yizkor URL */}
+            <div>
+              <label className="block text-xs font-semibold text-sand-700 mb-1.5">קישור יזכור (אופציונלי)</label>
+              <div className="relative">
+                <svg viewBox="0 0 24 24" fill="currentColor" width={15} height={15} className="absolute top-1/2 -translate-y-1/2 start-3 text-amber-400 pointer-events-none">
+                  <path d="M12 2C11.5 4 9.5 5.5 9.5 8C9.5 9.9 10.7 11.3 12 12C13.3 11.3 14.5 9.9 14.5 8C14.5 5.5 12.5 4 12 2Z" />
+                  <rect x="9.5" y="13.5" width="5" height="7.5" rx="0.75" fillOpacity="0.85" />
+                  <rect x="8" y="21" width="8" height="1.5" rx="0.75" fillOpacity="0.65" />
+                </svg>
+                <input type="url" name="yizkor_url" value={form.yizkor_url} onChange={handleChange}
+                  placeholder="https://izkor.gov.il/..." className={`${inputClass} ps-9`} dir="ltr" />
+              </div>
+            </div>
+
             {/* Media files */}
             <div>
               <label className="block text-xs font-semibold text-sand-700 mb-1.5">קבצי מדיה (תמונות / סרטונים)</label>

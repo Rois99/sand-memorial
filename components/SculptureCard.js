@@ -72,7 +72,7 @@ function CardImage({ media, hasFallenPhoto }) {
 /* ── Card ────────────────────────────────────────────────── */
 export default function SculptureCard({ sculpture }) {
   const router = useRouter();
-  const { id, name, rank, unit, age, story, instagram_url, tiktok_url, has_fallen_photo, sculpture_media } = sculpture;
+  const { id, name, rank, unit, age, story, instagram_url, tiktok_url, yizkor_url, has_fallen_photo, sculpture_media } = sculpture;
 
   const metaLine = [rank, unit, age != null ? `גיל ${age}` : null].filter(Boolean).join(" · ");
   const hasSocialLinks = instagram_url || tiktok_url;
@@ -99,10 +99,23 @@ export default function SculptureCard({ sculpture }) {
 
         {/* Social + Yizkor bar */}
         <div className="flex items-center gap-3 mt-4 pt-3 border-t border-sand-100">
-          {/* Yizkor candle — decorative memorial symbol, always shown */}
-          <span title="יזכור" className="text-amber-400/80">
-            <CandleIcon className="w-4 h-4" />
-          </span>
+          {/* Yizkor candle — links to memorial page when url is set */}
+          {yizkor_url ? (
+            <a
+              href={yizkor_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              title="דף יזכור"
+              className="text-amber-400/80 hover:text-amber-500 transition-colors"
+            >
+              <CandleIcon className="w-4 h-4" />
+            </a>
+          ) : (
+            <span title="יזכור" className="text-amber-400/80">
+              <CandleIcon className="w-4 h-4" />
+            </span>
+          )}
 
           {instagram_url && (
             <a
