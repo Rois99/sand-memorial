@@ -96,6 +96,31 @@ export function useSculptures() {
     );
   }
 
+  /**
+   * Generates (or reuses) a unique share token for a sculpture and returns
+   * the full family-edit URL. Saves the token to the DB on first call.
+   */
+  async function generateShareLink(id) {
+    const sculpture = sculptures.find((s) => s.id === id);
+    if (!sculpture) return null;
+
+    let token = sculpture.edit_token;
+
+    if (!token) {
+      token = crypto.randomUUID();
+      const { error } = await supabase
+        .from("sculptures")
+        .update({ edit_token: token })
+        .eq("id", id);
+      if (error) return null;
+      setSculptures((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, edit_token: token } : s))
+      );
+    }
+
+    return `${window.location.origin}/family-edit/${id}?token=${token}`;
+  }
+
   return {
     sculptures,
     loading,
@@ -104,5 +129,6 @@ export function useSculptures() {
     addSculpture,
     updateSculpture,
     updateSculptureMedia,
+    generateShareLink,
   };
 }

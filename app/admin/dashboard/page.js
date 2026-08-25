@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 import { clearAuthCookie } from "@/lib/auth";
 import { REQUEST_STATUS } from "@/lib/constants";
 import { useSculptures } from "@/hooks/useSculptures";
@@ -24,6 +25,7 @@ export default function AdminDashboard() {
     addSculpture,
     updateSculpture,
     updateSculptureMedia,
+    generateShareLink,
   } = useSculptures();
 
   const {
@@ -62,6 +64,8 @@ export default function AdminDashboard() {
   const error = sculpturesError || requestsError;
 
   return (
+    <>
+    <Toaster position="bottom-center" />
     <div className="min-h-screen bg-sand-50">
       <AdminHeader onLogout={handleLogout} />
 
@@ -88,7 +92,7 @@ export default function AdminDashboard() {
       ) : (
         <div className="max-w-6xl mx-auto px-6 py-10 space-y-12">
           <StatsBar stats={stats} />
-          <SculpturesTable sculptures={sculptures} onDelete={deleteSculpture} onUpdate={updateSculpture} onMediaUpdated={updateSculptureMedia} />
+          <SculpturesTable sculptures={sculptures} onDelete={deleteSculpture} onUpdate={updateSculpture} onMediaUpdated={updateSculptureMedia} onShareLink={generateShareLink} />
           <RequestsTable
             requests={requests}
             requestSort={requestSort}
@@ -100,5 +104,6 @@ export default function AdminDashboard() {
         </div>
       )}
     </div>
+    </>
   );
 }

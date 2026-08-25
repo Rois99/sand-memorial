@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Images, Pencil } from "lucide-react";
+import { Trash2, Images, Pencil, Share2 } from "lucide-react";
+import { toast } from "react-hot-toast";
 import MediaModal from "./MediaModal";
 import EditModal from "./EditModal";
 
-export default function SculpturesTable({ sculptures, onDelete, onUpdate, onMediaUpdated }) {
+export default function SculpturesTable({ sculptures, onDelete, onUpdate, onMediaUpdated, onShareLink }) {
   const [editingMedia, setEditingMedia] = useState(null);
   const [editingSculpture, setEditingSculpture] = useState(null);
 
@@ -60,6 +61,21 @@ export default function SculpturesTable({ sculptures, onDelete, onUpdate, onMedi
                         className="text-sand-500 hover:text-sand-800 hover:bg-sand-100 p-1.5 rounded-lg transition-colors"
                       >
                         <Images size={15} />
+                      </button>
+                      <button
+                        onClick={async () => {
+                          const url = await onShareLink(s.id);
+                          if (url) {
+                            await navigator.clipboard.writeText(url);
+                            toast.success("קישור המשפחה הועתק ללוח!");
+                          } else {
+                            toast.error("שגיאה ביצירת הקישור");
+                          }
+                        }}
+                        title="שיתוף קישור עריכה למשפחה"
+                        className="text-sand-500 hover:text-blue-600 hover:bg-blue-50 p-1.5 rounded-lg transition-colors"
+                      >
+                        <Share2 size={15} />
                       </button>
                       <button
                         onClick={() => onDelete(s.id)}

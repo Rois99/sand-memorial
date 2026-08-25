@@ -158,3 +158,4 @@ CREATE POLICY "DEV_storage_sculpture_media_anon_delete"
 -- ALTER TABLE requests      ADD COLUMN unit             TEXT;
 -- ALTER TABLE requests      ADD COLUMN yizkor_url       TEXT;
 -- ALTER TABLE artist_profile ADD COLUMN tiktok_url      TEXT;
+-- ALTER TABLE sculptures    ADD COLUMN edit_token       TEXT UNIQUE;
