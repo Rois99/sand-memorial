@@ -4,15 +4,24 @@ import { use, useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Mountain, ArrowRight, X } from "lucide-react";
 
-function InstagramIcon({ size = 16, className }) {
+function InstagramIcon({ size = 16 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
     </svg>
   );
 }
+
+function TikTokIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.3 6.3 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z" />
+    </svg>
+  );
+}
+
 import { supabase } from "@/lib/supabase";
 
 /* ── Candle icon ─────────────────────────────────────────── */
@@ -239,7 +248,7 @@ export default function SculpturePage({ params }) {
   if (loading) return <LoadingSkeleton />;
   if (notFound) return <NotFoundView />;
 
-  const { name, unit, age, date, story, sculpture_media } = sculpture;
+  const { name, unit, age, date, story, sculpture_media, yizkor_url, instagram_url, tiktok_url } = sculpture;
 
   return (
     <>
@@ -269,18 +278,42 @@ export default function SculpturePage({ params }) {
         </p>
       </section>
 
-      {/* Instagram link */}
-      {sculpture.instagram_url && (
-        <div className="max-w-3xl mx-auto px-6 pb-2">
-          <a
-            href={sculpture.instagram_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm hover:opacity-90 transition-opacity"
-          >
-            <InstagramIcon size={17} />
-            לפוסט באינסטגרם
-          </a>
+      {/* Social links */}
+      {(yizkor_url || instagram_url || tiktok_url) && (
+        <div className="max-w-3xl mx-auto px-6 pb-2 flex flex-wrap gap-3">
+          {yizkor_url && (
+            <a
+              href={yizkor_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-sand-900 hover:bg-sand-700 text-sand-50 text-sm font-medium px-5 py-2.5 rounded-xl transition-colors"
+            >
+              <CandleIcon className="w-4 h-4 text-amber-300" />
+              דף יזכור
+            </a>
+          )}
+          {instagram_url && (
+            <a
+              href={instagram_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-sand-900 hover:bg-sand-700 text-sand-50 text-sm font-medium px-5 py-2.5 rounded-xl transition-colors"
+            >
+              <InstagramIcon size={16} />
+              אינסטגרם
+            </a>
+          )}
+          {tiktok_url && (
+            <a
+              href={tiktok_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-sand-900 hover:bg-sand-700 text-sand-50 text-sm font-medium px-5 py-2.5 rounded-xl transition-colors"
+            >
+              <TikTokIcon size={16} />
+              טיקטוק
+            </a>
+          )}
         </div>
       )}
 
