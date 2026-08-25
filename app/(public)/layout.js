@@ -12,9 +12,17 @@ export default function PublicLayout({ children }) {
           <p className="mt-4 text-sand-600 text-xs">
              © {new Date().getFullYear()} זיכרון בחול - כל הזכויות שמורות לאלמוג שריקי
           </p>
-          <p className="mt-1 text-sand-600/40 text-[10px]">
-            .
-          </p>
+         <p className="mt-1 text-sand-600/40 text-[10px]">
+             האתר פותח באהבה על ידי{' '}
+             <a 
+                href="YOUR_LINKEDIN_URL" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-sand-400 transition-colors duration-200 underline underline-offset-2 decoration-sand-600/40 hover:decoration-sand-400"
+        >
+              רועי שרוני
+             </a>
+        </p>
         </div>
       </footer>
     </>
