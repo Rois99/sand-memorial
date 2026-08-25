@@ -27,6 +27,7 @@ function TikTokIcon({ className }) {
 export default function EditModal({ sculpture, onClose, onUpdate }) {
   const [form, setForm] = useState({
     name: sculpture.name ?? "",
+    date: sculpture.date ?? "",
     rank: sculpture.rank ?? "",
     unit: sculpture.unit ?? "",
     age: sculpture.age ?? "",
@@ -48,6 +49,7 @@ export default function EditModal({ sculpture, onClose, onUpdate }) {
     setSaving(true);
     await onUpdate(sculpture.id, {
       name: form.name,
+      date: form.date,
       rank: form.rank.trim() || null,
       unit: form.unit,
       age: Number(form.age),
@@ -83,6 +85,11 @@ export default function EditModal({ sculpture, onClose, onUpdate }) {
             <div>
               <label className="block text-xs font-semibold text-sand-700 mb-1.5">שם הנופל</label>
               <input type="text" name="name" value={form.name} onChange={handleChange} required className={inputClass} />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-sand-700 mb-1.5">תאריך</label>
+              <input type="text" name="date" value={form.date} onChange={handleChange} placeholder="לדוגמה: אוגוסט 2026" className={inputClass} />
             </div>
 
             <div>
