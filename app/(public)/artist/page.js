@@ -69,7 +69,6 @@ export default function ArtistPage() {
   return (
     <>
       {/* Dark hero */}
-      {/* Dark hero */}
       <section 
         className="relative bg-cover bg-center py-20 px-6"
         style={{ backgroundImage: "url('/sand-bg.jpg')" }}
