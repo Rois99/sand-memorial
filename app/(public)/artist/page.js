@@ -69,8 +69,14 @@ export default function ArtistPage() {
   return (
     <>
       {/* Dark hero */}
-      <section className="bg-sand-900 py-20 px-6">
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-10 text-center sm:text-start">
+      {/* Dark hero */}
+      <section 
+        className="relative bg-cover bg-center py-20 px-6"
+        style={{ backgroundImage: "url('/sand-bg.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-sand-900/80" />
+        
+        <div className="relative z-10 max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-10 text-center sm:text-start">
           {/* Photo */}
           <div className="shrink-0 w-48 h-48 rounded-full overflow-hidden bg-sand-800 border-4 border-sand-700 shadow-xl">
             {image_url ? (
